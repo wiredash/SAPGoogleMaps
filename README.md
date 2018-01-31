@@ -5,6 +5,9 @@ SAP Geo Spatial Scheduling
 
 An AngularJS application that allows SAP PM Work Scheduling to occur on the basis of Geo Spatial data. In other words, schedulers can can view PM work orders on a Google Map and select multiple oprations for assignment to the same work center.
 
+## Selecting Operations
+The app is designed to go into selection mode when the user keeps the SHIFT + Left Mouse Click button pressed while dragging the mouse over the markers to be selected
+
 ## Data Format
 This index.html in this repo, contains a section of JSON data. This can be broken into the "location" object and the "filter" object.
 
