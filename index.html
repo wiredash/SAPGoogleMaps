@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyD_i3o1nz8AtB8m0dkKz2XMDw2D8PHvqaI&sensor=false&libraries=drawing"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Francois+One" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.21/angular-sanitize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.compat.min.js"></script>
+  <script src="app.js"></script>
+  <script src="map.js"></script>
+  <script src="controller.js"></script>
+  <script src="selection_manager.js"></script>
+  <script src="lib/checklist-model.js"></script>
+  <link rel="stylesheet" type="text/css" href="map_it.css">
+  <script>
+    var app = angular.module('mapMe');
+    app.value('locations', [
+      {
+        id: 1,
+        title: 'W0112129-0001',
+        content: '<b>Operation:</b>&nbsp;0001',
+        lat:   49.224181815000,
+        lng:  -123.07598010000,
+        selected: false,
+        attributes: {
+          weekdays: ['monday', 'sunday'],
+          work_type: ['customer_driven']
+        }
+      }, {
+        id: 2,
+        title: 'M238902-0022',
+        content: '<b>Operation:</b>&nbsp;0001&nbsp;<b>Sub-Op:</b>&nbsp;0001',
+        lat:   49.223181815000,
+        lng:  -123.07538010000,
+        selected: false,
+        attributes: {
+          weekdays: ['sunday'],
+          work_type: ['something_else']
+        }
+      }, {
+        id: 3,
+        title: 'M238902-9999',
+        content: '<b>Operation:</b>&nbsp;0001&nbsp;<b>Sub-Op:</b>&nbsp;0001',
+        lat:   49.223191815300,
+        lng:  -123.07518010010,
+        selected: false,
+        attributes: {
+          weekdays: ['monday'],
+          work_type: ['something_else']
+        }
+      }]);
+    app.value('filters', [
+      {
+        name: 'weekdays',
+        type: 'inclusive',
+        selected: undefined,
+        values: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
+        icons: [
+          'https://maps.google.com/mapfiles/marker_black.png',
+          ,
+          ,
+          ,
+          'https://maps.google.com/mapfiles/marker_green.png',
+          ,
+          'https://maps.google.com/mapfiles/marker_orange.png']
+      }, {
+        name: 'work_type',
+        type: 'exclusive',
+        selected: ['customer_driven', 'something_else'],
+        values: ['customer_driven', 'something_else'],
+        icons: ['https://maps.google.com/mapfiles/marker_green.png', 'https://maps.google.com/mapfiles/marker_purple.png']
+      }
+    ]);
+    app.value('currentLocation', [49.247862, -123.075458]);
+  </script>
+  <!--[if lte IE 8]>
+  <script>
+    document.createElement('map');
+    document.createElement('selection-manager');
+  </script>
+  <![endif]-->
+  <style>
+    .minDrop {height:48px;
+      overflow:hidden;
+      background-color:#f6f6f6;
+      top:-10px;
+    }
+    .lpc_up {
+      border:1px #cccccc solid;
+      position:relative;
+      display:block;
+      float:right;
+      width:27px;
+      height:27px;
+      top:20px;
+      padding-left: 14px;
+      background:url('/sap/public/bc/icons/s_B_NXTI.gif') no-repeat center center;
+      background-color:#e2e2e2;
+    }
+    .lpc {
+      border:1px #acacac dashed;
+      position:relative;
+      display:block;
+      float:right;
+      width:27px;
+      height:27px;
+      top:20px;
+      background:url('/sap/public/bc/icons/s_B_PRVI.gif') no-repeat center center;
+      background-color:#f2f2f2;
+    }
+    .lpc:hover {cursor:hand}
+    .ui-state-active1 {
+      border:2px #aaaaaa solid;
+      background-color:#000
+    }
+  </style>
+</head>
+<body ng-app="mapMe">
+<div class="full-screen" ng-controller="MapMeController">
+  <map class="full-screen">
+    <selection-manager selectionMode="selectionMode"/>
+  </map>
+  <div id="left-panel" class="lp dropSheet">
+    <div id="left-panel-cl" class="lpc_up"><i class="fa fa-arrow-circle-down" aria-hidden="true"></i></div>
+    <h4 id="sel-title">
+      <ng-pluralize count="selectedLocations().length"
+                    when="{'0': 'No operation selected.',
+                     'one': '1 operation selected.',
+                     'other': '{} operations selected.'}">
+      </ng-pluralize>
+    </h4>
+    <div>
+      <input type="button" name="Update Backend" onclick="alert('This would be a Web Service Call to the back end')" value="Update Backend with Selections">
+    </div>
+    <div id='oplist'>
+      <div ng-repeat="location in selectedLocations()">
+        <div id="content"><h4>{{location.title}}</h4></div>
+        <div id="inf" ng-bind-html="location.content"></div>
+      </div>
+    </div>
+    <div><a href="javascript:void(0)" ng-click="clearAllFilters()">Clear All Filters</a></div>
+    <div><select ng-model="selectedFilter" ng-options="filter.name | humanize for filter in filters"></select></div>
+    <div ng-if="selectedFilter.type == 'inclusive'">
+      <input type="checkbox" ng-checked="allSelected(selectedFilter)" ng-click="toggleSelectAll(selectedFilter)"> All
+      <label ng-repeat="value in selectedFilter.values" style="display: block;">
+        <input type="checkbox" checklist-model="selectedFilter.selected" checklist-value="value"> {{value | humanize}}
+      </label>
+    </div>
+    <div ng-if="selectedFilter.type == 'exclusive'">
+      <input type="radio" name="selectedFilter.name" ng-checked="allSelected(selectedFilter)" ng-click="toggleSelectAll(selectedFilter)"> All
+      <label ng-repeat="value in selectedFilter.values" style="display: block;">
+        <input type="radio" name="selectedFilter.name"
+               ng-checked="selectedFilter.selected.length == 1 && selectedFilter.selected.indexOf(value) != -1"
+               ng-click="selectedFilter.selected = [value]">
+        {{value | humanize}}
+      </label>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

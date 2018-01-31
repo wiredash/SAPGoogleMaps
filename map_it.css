@@ -1,0 +1,103 @@
+html, body, #map-canvas{
+          height: 100%;
+          margin: 0px;
+          padding: 0px
+        }
+.full-screen {
+    height: 100%;
+    width: 100%ont
+}
+#oplist {background-color:#FFFFFF; padding:6px; border-radius:4px; overflow: scroll;height:50%}
+   div[id*="oper"] {
+  border-bottom:1px #3d3d3d solid; margin-bottom:4px;overflow:hidden;width:225px;
+display: inline-block;
+white-space: nowrap;
+}
+.optx {font-size:10px}
+    a:link {color:#fdfdfd; background-color:#7d5e4d;padding:2px}
+    a:visited {color:#fdfdfd;background-color:#7d5e4d; text-decoration:none;padding:2px}
+    a:hover {color:#333333; font-weight:bold; background-color:#fdfdfd;padding:2px}
+    a:selected {color:#333333; font-weight:bold; background-color:#fdfdfd;padding:2px}
+    .lp {
+      top:40px;  /* adjust value accordingly */
+      right: 10px;  /* adjust value accordingly */
+      bottom: 10px;
+    width:250px;
+    font-family: 'Francois One', Arial;
+    height:80%;
+     position: absolute;
+     padding: 0px 8px 8px 8px;
+    
+     }
+  .ann {color:#efefef; font-size:7px;font-style:italic; background-color:#339933;padding:0px 2px 0px 2px}
+.ann2 {color:#efefef; font-size:7px;font-style:italic; background-color:#668833;padding:0px 2px 0px 2px}
+  .REL {background-color:#339933}
+  .CRTD {background-color:#CC0099}
+  .dropSheet
+  {
+
+    background-color: #F6F6F6;
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -ms-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#BDCDFF',GradientType=0 );
+
+    -moz-box-shadow: 3px 3px 4px #000;
+    -webkit-box-shadow: 3px 3px 4px #000;
+    box-shadow: 3px 3px 4px #000;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+  }
+  .dropSheet:hover
+  {
+    -moz-box-shadow: 3px 3px 4px #000;
+    -webkit-box-shadow: 3px 3px 4px #000;
+    box-shadow: 3px 3px 4px #000;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+    background-color: #f6f6f6;
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -ms-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#CDDDFF',GradientType=0 );
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+    -moz-box-shadow: 3px 3px 4px #000;
+    -webkit-box-shadow: 3px 3px 4px #000;
+    box-shadow: 3px 3px 4px #000;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=135, Color='#000000');
+  }
+  #content h4 {
+font-family:Arial;
+font-size:14px;
+font-weight:bold;
+}
+#inf {
+font-family:Arial;
+font-size:11px;
+text-align:right;
+}
+#oplist {
+font-family:Arial;
+font-size:12px;
+}
+#workspace {height: 30px; width:100%;position:relative;background-color: #F6F6F6;
+    display:block;float: top;
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -moz-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -ms-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: -o-linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);
+    background-image: linear-gradient(rgba(255, 255, 255, .2) 50%, transparent 50%, transparent);    
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=75, Color='#000000')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=75, Color='#000000');
+        filter: alpha(opacity=30);
+  }
+
+.filter.selected {
+    font-weight: bold;
+}
